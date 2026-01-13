@@ -1,0 +1,20 @@
+Name: {{ client.first_name }} {{ client.last_name }}
+Date: {{ intake_date }}
+
+DOB: {{ dob }}   Case #: {{ case_number }}
+Phone: {{ phone }}
+Email: {{ email }}
+
+Address: {{ address.street }} {{ address.unit }}
+{{ address.city }}, {{ address.state }} {{ address.zip }}
+
+Income: {{ income.amount }} / {{ income.frequency }}
+Source: {{ income.source }}
+
+Rent: {{ rent.amount }}
+Last Paid: {{ last_rent.amount }} on {{ last_rent.date }}
+
+Household:
+{{ household_block }}
+
+...

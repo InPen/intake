@@ -1,0 +1,184 @@
+metadata:
+  title: "Client Intake Form"
+  short title: "Intake"
+  description: "Public client intake intake form"
+  # Optional:
+  # authors:
+  #   - "Maria Ines Folta"
+
+features:
+  mobile friendly: True
+  progress bar: True
+
+---
+# -----------------------
+# Objects / data modeling
+# -----------------------
+objects:
+  - client: Individual
+  - household: DAList.using(object_type=Individual, complete_attribute='complete')
+  - address: Address
+
+---
+# -----------------------
+# Interview flow
+# -----------------------
+mandatory: True
+code: |
+  # 1) Intro + consent (optional, but nice)
+  intro
+
+  # 2) Basic identity + matter metadata
+  basic_info
+
+  # 3) Contact + address
+  contact_info
+  address_info
+
+  # 4) Financials
+  income_info
+  rent_info
+
+  # 5) Household list (repeat)
+  household_setup
+  if household_add_people:
+    household.gather()
+
+  # 6) Landlord + subsidy
+  landlord_info
+  subsidy_info
+
+  # 7) Narrative sections
+  conditions_info
+  additional_info_screen
+
+  # 8) Meeting + attorney
+  meeting_info
+  attorney_info
+
+  # 9) Problem statement + notes + outcome
+  problem_statement_screen
+  atty_notes_screen
+  outcome_screen
+
+  # 10) Review then submit
+  review_screen
+  submit_intake
+
+  # 11) Final
+  thank_you
+
+---
+# -----------------------
+# Screens
+# -----------------------
+
+id: intro
+question: |
+  Client Intake Form
+subquestion: |
+  Please complete this intake form.  
+  When you submit, your information will be sent to our office.
+
+  *If you are in immediate danger, call 911.*
+continue button field: intro_ok
+
+---
+id: basic_info
+question: |
+  Basic information
+fields:
+  - First name: client.name.first
+  - Middle name (optional): client.name.middle
+    required: False
+  - Last name: client.name.last
+
+  - Date: intake_date
+    datatype: date
+    default: ${ today() }
+
+  - Date of birth (optional): client.birthdate
+    datatype: date
+    required: False
+
+  - Case number (optional): case_number
+    required: False
+
+---
+id: contact_info
+question: |
+  Contact information
+fields:
+  - Phone (optional): client.phone_number
+    required: False
+  - Email (optional): client.email
+    datatype: email
+    required: False
+
+---
+id: address_info
+question: |
+  Address
+fields:
+  - Street address: address.address
+  - Apt/Unit (optional): address.unit
+    required: False
+  - City: address.city
+  - State: address.state
+    default: MA
+  - Zip: address.zip
+
+---
+id: income_info
+question: |
+  Income
+fields:
+  - Income amount (optional): income_amount
+    datatype: currency
+    required: False
+  - Income frequency (optional): income_frequency
+    required: False
+    choices:
+      - Hour (hr): hr
+      - Week (wk): wk
+      - Month (mo): mo
+      - Year (yr): yr
+  - Source of income (optional): income_source
+    required: False
+
+---
+id: rent_info
+question: |
+  Rent
+fields:
+  - Rent amount (optional): rent_amount
+    datatype: currency
+    required: False
+  - Last rent paid amount (optional): last_rent_paid_amount
+    datatype: currency
+    required: False
+  - Last rent paid date (optional): last_rent_paid_date
+    datatype: date
+    required: False
+
+---
+id: household_setup
+question: |
+  Household members
+subquestion: |
+  Add the names and birthdays of everyone living in the unit (including the client, if you want).
+fields:
+  - Do you want to add household members now?: household_add_people
+    datatype: yesnoradio
+
+---
+# Gather loop screen (repeatable)
+question: |
+  Household member
+fields:
+  - First name: household[i].name.first
+  - Last name: household[i].name.last
+  - Birthdate (optional): household[i].birthdate
+    datatype: date
+    required: False
+  - Add another person?: household.there_is_

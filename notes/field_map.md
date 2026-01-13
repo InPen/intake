@@ -1,0 +1,32 @@
+DOCX variable mapping checklist
+
+client.name
+intake_date
+client.birthdate
+case_number
+client.phone_number
+client.email
+address.address
+address.unit
+address.city
+address.state
+address.zip
+income_amount
+income_frequency
+income_source
+rent_amount
+last_rent_paid_amount
+last_rent_paid_date
+household (loop)
+landlord_name
+landlord_has_attorney
+is_subsidized
+subsidy_type
+conditions_issues
+additional_info
+met_location
+met_date
+attorney_name
+problem_statement
+atty_notes
+outcome
