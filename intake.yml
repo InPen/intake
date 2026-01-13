@@ -1,0 +1,10 @@
+metadata:
+  title: "Hello World"
+
+mandatory: True
+question: |
+  It works 🎉
+subquestion: |
+  If you can see this page, your Docassemble interview is running.
+buttons:
+  - Exit: exit
