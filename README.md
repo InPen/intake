@@ -250,8 +250,8 @@ It creates:
 
 ## Author / Maintainer
 
-Maria Ines Folta
-Housing Paralegal | Legal Technologist
-Greater Boston Legal Services
+- Maria Ines Folta
+- Housing Paralegal | Legal Technologist
+- Greater Boston Legal Services
 
 ---
